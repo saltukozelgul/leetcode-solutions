@@ -5,20 +5,28 @@ class Solution(object):
         :rtype: str
         """
 
-        ## Sliding window algorithm
-        longest = 0
-        longestString = ""
-        start = 0
-        end = 0
-        while end < len(s):
-            if self.isPalindrome(s[start:end+1]):
-                end += 1
-                if end - start > longest:
-                    longest = end - start
-                    longestString = s[start:end]
-            else:
-                start += 1
+        """
+        dp is bool array that shows if substring from i to j is palindrome
+        dp[i][j] = True if s[i:j+1] is palindrome
+        dp[i][j] = False otherwise
+        """
 
-    def isPalindrome(self, s):
-        return s == s[::-1]
+        n = len(s)
+        longest = ""
+        dp = [[False] * n for _ in range(n)]
 
+        # All one-letter substrings are palindromes
+        # we are doing it for avoid unnecessary checks
+        for i in range(n):
+            dp[i][i] = True
+            longest = s[i]
+
+        # Check all longer substrings
+        for j in range(1, n):
+            for i in range(j):
+                if s[i] == s[j] and (j - i <= 2 or dp[i+1][j-1]):
+                    dp[i][j] = True
+                    if len(s[i:j+1]) > len(longest):
+                        longest = s[i:j+1]
+
+        return longest
