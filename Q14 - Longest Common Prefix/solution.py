@@ -1,8 +1,5 @@
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-
-        
-
         # Create a variable to store the longest common prefix
         longest_common_prefix = ''
         # Loop through the characters in the first string
